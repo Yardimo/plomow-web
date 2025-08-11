@@ -47,7 +47,7 @@ function App(){
 
   useEffect(()=>{
     // 1) Insert your Mapbox token
-    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWlrZW5vcnJpcyIsImEiOiJjbWU0eXIyMHQwb3NlMm1wcHNkYXRwYzYxIn0.HrNdh-cFPgqR4SSYgkdHTw';
 
     // 2) Init map
     const map = new mapboxgl.Map({
