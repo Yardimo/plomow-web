@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plomow</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plomow Map</title>
 
-<!-- Mapbox CSS -->
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet">
+  <!-- Mapbox GL CSS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="styles.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="plomow.png" alt="Plomow Logo" class="logo">
+  </div>
 
-<header class="header">
-  <img src="plomow.png" alt="Plomow Logo" class="logo">
-  <h1>Plomow</h1>
-</header>
+  <!-- Map -->
+  <div id="map"></div>
 
-<div id="map"></div>
+  <!-- Mapbox GL JS -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
 
-<!-- Mapbox JS (MUST be before app.js) -->
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
-
-<!-- Your app logic -->
-<script src="app.js"></script>
+  <!-- App JS -->
+  <script src="app.js"></script>
 </body>
 </html>
