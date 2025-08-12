@@ -21,16 +21,31 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Nice-to-have for mobile theming -->
+  <meta name="theme-color" content="#0054A4" />
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
   <a class="simple-link top-right" href="contractor.html">Contractor Console →</a>
+
   <div class="brand">
     <img src="logo.svg" alt="Plomow" height="18" />
-    <span class="badge">web mock</span>
+    <span class="badge">snow • ice • grass</span>
   </div>
+
   <div id="root"></div>
 
+  <!-- Your React app (Babel-transpiled) -->
   <script type="text/babel" src="app.js"></script>
+
+  <!-- Dynamic brand color swap (expects a select with id="service-type") -->
+  <script src="script.js"></script>
+
+  <noscript>
+    <div class="simple-link top-left">Please enable JavaScript to use Plomow.</div>
+  </noscript>
 </body>
 </html>
