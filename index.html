@@ -1,68 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>PLOMOW – Book Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plomow Test Map</title>
 
-  <!-- Mapbox GL -->
+  <!-- Mapbox CSS -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
-
-  <!-- Mapbox Draw -->
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.css" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.js"></script>
-
-  <!-- Mapbox Geocoder (autocomplete) -->
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1/mapbox-gl-geocoder.css" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1/mapbox-gl-geocoder.min.js"></script>
-
-  <!-- Turf.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-
-  <link rel="stylesheet" href="./styles.css" />
-  <meta name="theme-color" content="#0054A4" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
-  <!-- fixed brand (top-left) -->
-  <a class="brand" href="./index.html" aria-label="PLOMOW home">
-    <img src="./plomow.png" alt="PLOMOW logo" />
-    <span class="tagline">ON-DEMAND SNOW & LAWN</span>
-  </a>
 
-  <!-- top-right link -->
-  <a class="simple-link top-right" href="./contractor.html">Contractor Console →</a>
+  <!-- Map container -->
+  <div id="map"></div>
 
-  <!-- full-bleed map -->
-  <div id="map" role="application" aria-label="Service area map"></div>
+  <!-- Mapbox JS (must be loaded before your script) -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
 
-  <!-- floating bottom panel -->
-  <section id="panel" class="card" aria-label="Booking panel">
-    <div class="row">
-      <select id="service-type" class="pill" aria-label="Service">
-        <option value="snow">❄ Snow Removal</option>
-        <option value="lawn">🌱 Lawn Cutting</option>
-        <option value="leaves">🍂 Leaf Cleanup</option>
-        <option value="salt">🧂 Salting</option>
-      </select>
-      <input id="address" class="pill" placeholder="Address (optional)" inputmode="text" />
-    </div>
+  <!-- Your script -->
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWlrZW5vcnJpcyIsImEiOiJjbWU0eXIyMHQwb3NlMm1wcHNkYXRwYzYxIn0.HrNdh-cFPgqR4SSYgkdHTw';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [-81.233, 42.983], // London, ON
+      zoom: 12
+    });
+  </script>
 
-    <div class="row controls">
-      <button id="btn-area">+ Add Area</button>
-      <button id="btn-edge">+ Add Edge</button>
-      <button id="btn-finish">Finish</button>
-      <button id="btn-clear">Clear</button>
-      <button id="btn-request" class="primary" disabled>Request Service</button>
-    </div>
-
-    <div id="metrics" class="metrics" style="display:none">
-      <div class="chip">Area: <b id="m-area-m2">0</b> m² • <b id="m-area-ft2">0</b> ft²</div>
-      <div class="chip">Edge: <b id="m-edge-m">0</b> m • <b id="m-edge-ft">0</b> ft</div>
-      <div class="chip">Estimate: <b id="m-price">$0.00</b></div>
-    </div>
-  </section>
-
-  <script src="./app.js"></script>
 </body>
 </html>
