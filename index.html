@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>PLOMOW – Book Service</title>
 
   <!-- Mapbox GL -->
@@ -24,15 +24,20 @@
   <meta name="theme-color" content="#0054A4" />
 </head>
 <body>
-  <!-- top links -->
+  <!-- fixed brand (top-left) -->
+  <a class="brand" href="./index.html" aria-label="PLOMOW home">
+    <img src="./plomow.png" alt="PLOMOW logo" />
+    <span class="tagline">ON-DEMAND SNOW & LAWN</span>
+  </a>
+
+  <!-- top-right link -->
   <a class="simple-link top-right" href="./contractor.html">Contractor Console →</a>
-  <div class="brand"><b>PLOMOW</b><span class="badge">snow • ice • grass</span></div>
 
   <!-- full-bleed map -->
-  <div id="map"></div>
+  <div id="map" role="application" aria-label="Service area map"></div>
 
-  <!-- floating panel -->
-  <div id="panel" class="card">
+  <!-- floating bottom panel -->
+  <section id="panel" class="card" aria-label="Booking panel">
     <div class="row">
       <select id="service-type" class="pill" aria-label="Service">
         <option value="snow">❄ Snow Removal</option>
@@ -40,7 +45,7 @@
         <option value="leaves">🍂 Leaf Cleanup</option>
         <option value="salt">🧂 Salting</option>
       </select>
-      <input id="address" class="pill" placeholder="Address (optional)" />
+      <input id="address" class="pill" placeholder="Address (optional)" inputmode="text" />
     </div>
 
     <div class="row controls">
@@ -56,7 +61,7 @@
       <div class="chip">Edge: <b id="m-edge-m">0</b> m • <b id="m-edge-ft">0</b> ft</div>
       <div class="chip">Estimate: <b id="m-price">$0.00</b></div>
     </div>
-  </div>
+  </section>
 
   <script src="./app.js"></script>
 </body>
