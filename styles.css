@@ -1,23 +1,141 @@
-:root { --bg:#0b0f14; --card:#111826; --muted:#93a3b3; --accent:var(--dynamic); --accent-green:#2E9E4D; }
-html,body,#root { height:100%; margin:0; }
-body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:#e6eef8; }
-.map-wrap { position:fixed; inset:0; }
-#map { position:absolute; inset:0; }
-.panel { position:fixed; left:12px; right:12px; bottom:12px; z-index:5; display:grid; gap:10px; }
-.card { background:rgba(17,24,38,.6); backdrop-filter: saturate(160%) blur(10px); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:14px; box-shadow: 0 12px 28px rgba(0,0,0,.45); }
-.row { display:flex; gap:8px; }
-.row > * { flex:1; }
-.controls button { border:1px solid rgba(255,255,255,.12); background:#0f1522; color:#e6eef8; padding:12px 14px; border-radius:14px; font-weight:700; letter-spacing:.2px; box-shadow: 0 6px 16px rgba(0,0,0,.25); backdrop-filter: saturate(140%) blur(6px); }
-.controls button.primary { background: linear-gradient(135deg, var(--accent) 0%, #1f7ccf 40%, var(--accent-green) 100%); color:#001428; border-color:transparent; box-shadow: 0 10px 24px rgba(0,84,164,.35); }
-.controls button:disabled { opacity:.5; }
-.badge { font-size:12px; color:var(--muted); }
-.pill { background:#0f1522; padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.1); outline: none; color:#e6eef8; }
-.pill:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,84,164,.25); }
-.stack { display:grid; gap:6px; }
-.heading { font-weight:700; font-size:16px; }
-.brand { position:fixed; top:12px; left:50%; transform: translateX(-50%); z-index:5; padding:10px 14px; border-radius:14px; background:rgba(17,24,38,.7); border:1px solid rgba(255,255,255,.06); box-shadow: 0 8px 18px rgba(0,0,0,.35); display:flex; align-items:center; gap:10px; }
-.brand b { letter-spacing:.5px }
-.toast { position:fixed; top:12px; right:12px; z-index:6; background:#0f1522; border:1px solid rgba(255,255,255,.08); padding:10px 12px; border-radius:12px; display:none }
-.draw-hint { position:fixed; top:60px; left:12px; z-index:5; padding:8px 10px; background:rgba(17,24,38,.75); border:1px solid rgba(255,255,255,.08); border-radius:10px; font-size:12px; color:#c9d4e0; box-shadow: 0 6px 16px rgba(0,0,0,.3); }
-/* Make Mapbox Draw buttons minimal on mobile */
-.mapbox-gl-draw_ctrl-draw-btn { width:36px; height:36px; }
+/* =========================
+   PLOMOW styles.css (updated)
+   Brand: Blue #0054A4, Green #2E9E4D
+   Hybrid vibe: Apple glass + Uber map dark
+   ========================= */
+
+:root {
+  --bg: #0b0f14;
+  --card: #111826;
+  --muted: #93a3b3;
+  --accent: #0054A4;        /* Plomow Blue */
+  --accent-green: #2E9E4D;  /* Plomow Green */
+  --dynamic: #0054A4;       /* Updated live by JS based on service */
+}
+
+/* Base */
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: #e6eef8;
+}
+
+/* Links & utility */
+a { color: var(--accent); text-decoration: none; }
+.simple-link {
+  position: fixed; z-index: 5;
+  background: rgba(17,24,38,.85);
+  border: 1px solid rgba(255,255,255,.06);
+  padding: 8px 10px; border-radius: 10px;
+}
+.top-right { top: 12px; right: 12px; }
+.top-left  { top: 12px; left: 12px; }
+.badge { font-size: 12px; color: var(--muted); margin-left: 8px; }
+.badge-soft {
+  background: #0f1522; border: 1px solid rgba(255,255,255,.08);
+  padding: 4px 8px; border-radius: 999px; font-size: 12px;
+}
+
+/* Map */
+.map-wrap { position: fixed; inset: 0; }
+#map { position: absolute; inset: 0; }
+.mapbox-gl-draw_ctrl-draw-btn { width: 36px; height: 36px; }
+
+/* Brand pill (center top) */
+.brand {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  z-index: 5; padding: 10px 14px; border-radius: 14px;
+  background: rgba(17,24,38,.70);
+  border: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  display: flex; align-items: center; gap: 10px;
+}
+.brand img { display: block; }
+.heading { font-weight: 700; font-size: 16px; }
+
+/* Panels / cards (Apple glassy) */
+.panel {
+  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 5;
+  display: grid; gap: 10px;
+}
+.card {
+  background: rgba(17,24,38,.6);
+  backdrop-filter: saturate(160%) blur(10px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px; padding: 14px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.45);
+}
+.stack { display: grid; gap: 6px; }
+.row { display: flex; gap: 8px; }
+.row > * { flex: 1; }
+
+/* Inputs */
+.pill {
+  background: #0f1522; color: #e6eef8;
+  padding: 10px 12px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.1);
+  outline: none;
+}
+.pill:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,84,164,.25);
+}
+
+/* Buttons */
+.controls button {
+  border: 1px solid rgba(255,255,255,.12);
+  background: #0f1522; color: #e6eef8;
+  padding: 12px 14px; border-radius: 14px;
+  font-weight: 700; letter-spacing: .2px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  backdrop-filter: saturate(140%) blur(6px);
+  cursor: pointer;
+}
+.controls button.primary {
+  /* Blue → Green gradient, with dynamic brand hue from JS */
+  background: linear-gradient(135deg, var(--dynamic) 0%, #1f7ccf 40%, var(--accent-green) 100%);
+  color: #001428; border-color: transparent;
+  box-shadow: 0 10px 24px rgba(0,84,164,.35);
+}
+.controls button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Hints / Toasts */
+.draw-hint {
+  position: fixed; top: 60px; left: 12px; z-index: 5;
+  padding: 8px 10px; background: rgba(17,24,38,.75);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px; font-size: 12px; color: #c9d4e0;
+  box-shadow: 0 6px 16px rgba(0,0,0,.3);
+}
+.toast {
+  position: fixed; top: 12px; right: 12px; z-index: 6;
+  background: #0f1522; border: 1px solid rgba(255,255,255,.08);
+  padding: 10px 12px; border-radius: 12px; display: none;
+}
+
+/* Contractor console list/cards */
+.list {
+  max-width: 900px; margin: 80px auto 40px; padding: 0 16px;
+  display: grid; gap: 12px;
+}
+.item {
+  background: rgba(17,24,38,.9);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 14px; padding: 12px;
+  display: grid; gap: 8px;
+}
+.item .meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #c9d4e0; }
+.item .actions { display: flex; gap: 8px; }
+
+/* Status coloring */
+.status-open       { color: #d2e3ff; }
+.status-assigned   { color: #ffe4a3; }
+.status-inProgress { color: #a6ffc7; }
+.status-completed  { color: var(--accent-green); }
+
+/* Responsive tweaks */
+@media (max-width: 560px) {
+  .row { flex-direction: column; }
+  .brand { left: 12px; transform: none; }
+}
