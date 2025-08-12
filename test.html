@@ -3,29 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plomow Map Smoke Test</title>
+  <title>Plomow Map Test</title>
 
+  <!-- Mapbox CSS -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
 
   <style>
-    html,body,#map { height:100%; margin:0; }
-    #map { position:fixed; inset:0; }
+    html, body, #map { height: 100%; margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
   </style>
 </head>
 <body>
   <div id="map"></div>
+
+  <!-- Mapbox JS: must be before your code -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
+
+  <!-- Your map init -->
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWlrZW5vcnJpcyIsImEiOiJjbWU0eXIyMHQwb3NlMm1wcHNkYXRwYzYxIn0.HrNdh-cFPgqR4SSYgkdHTw';
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-81.233, 42.983], // London, ON
-      zoom: 12,
-      attributionControl: false
+      zoom: 12
     });
-    map.addControl(new mapboxgl.AttributionControl({ compact:true }));
-    map.addControl(new mapboxgl.NavigationControl({ visualizePitch:true }));
   </script>
 </body>
 </html>
