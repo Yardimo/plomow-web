@@ -13,20 +13,26 @@
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.css" />
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.js"></script>
 
+  <!-- Mapbox Geocoder (autocomplete) -->
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1/mapbox-gl-geocoder.css" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1/mapbox-gl-geocoder.min.js"></script>
+
   <!-- Turf.js -->
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
   <link rel="stylesheet" href="./styles.css" />
   <meta name="theme-color" content="#0054A4" />
-  <link rel="icon" href="favicon.ico">
 </head>
 <body>
+  <!-- top links -->
   <a class="simple-link top-right" href="./contractor.html">Contractor Console →</a>
+  <div class="brand"><b>PLOMOW</b><span class="badge">snow • ice • grass</span></div>
 
+  <!-- full-bleed map -->
   <div id="map"></div>
 
-  <!-- Floating UI panel -->
-  <div id="panel" class="form-card">
+  <!-- floating panel -->
+  <div id="panel" class="card">
     <div class="row">
       <select id="service-type" class="pill" aria-label="Service">
         <option value="snow">❄ Snow Removal</option>
@@ -37,22 +43,21 @@
       <input id="address" class="pill" placeholder="Address (optional)" />
     </div>
 
-    <div class="row controls" style="margin-top:8px">
+    <div class="row controls">
       <button id="btn-area">+ Add Area</button>
       <button id="btn-edge">+ Add Edge</button>
       <button id="btn-finish">Finish</button>
       <button id="btn-clear">Clear</button>
-      <button id="btn-request" class="primary" disabled>Request</button>
+      <button id="btn-request" class="primary" disabled>Request Service</button>
     </div>
 
     <div id="metrics" class="metrics" style="display:none">
-      <div class="chip">Area: <b id="m-area-m2">0</b> m² / <b id="m-area-ft2">0</b> ft²</div>
-      <div class="chip">Edge: <b id="m-edge-m">0</b> m / <b id="m-edge-ft">0</b> ft</div>
+      <div class="chip">Area: <b id="m-area-m2">0</b> m² • <b id="m-area-ft2">0</b> ft²</div>
+      <div class="chip">Edge: <b id="m-edge-m">0</b> m • <b id="m-edge-ft">0</b> ft</div>
       <div class="chip">Estimate: <b id="m-price">$0.00</b></div>
     </div>
   </div>
 
   <script src="./app.js"></script>
-  <script src="./script.js"></script>
 </body>
 </html>
