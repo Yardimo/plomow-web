@@ -1,153 +1,126 @@
-/* =========================
-   PLOMOW styles.css (Full Unified)
-   Brand: Blue #0054A4, Green #2E9E4D
-   Hybrid vibe: Apple glass + Uber dark
-   ========================= */
-
-:root {
-  --bg: #0b0f14;
-  --card: #111826;
-  --muted: #93a3b3;
-  --accent: #0054A4;        /* Plomow Blue */
-  --accent-green: #2E9E4D;  /* Plomow Green */
-  --dynamic: #0054A4;       /* Updated live by JS based on service */
-}
-
-/* Base */
-html, body, #root { height: 100%; margin: 0; }
+/* ===== Base Layout ===== */
 body {
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: var(--bg);
-  color: #e6eef8;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f9f9f9;
+  color: #111;
 }
 
-/* Links & utility */
-a { color: var(--accent); text-decoration: none; }
-.simple-link {
-  position: fixed; z-index: 5;
-  background: rgba(17,24,38,.85);
-  border: 1px solid rgba(255,255,255,.06);
-  padding: 8px 10px; border-radius: 10px;
-}
-.top-right { top: 12px; right: 12px; }
-.top-left  { top: 12px; left: 12px; }
-.badge { font-size: 12px; color: var(--muted); margin-left: 8px; }
-.badge-soft {
-  background: #0f1522; border: 1px solid rgba(255,255,255,.08);
-  padding: 4px 8px; border-radius: 999px; font-size: 12px;
+a.simple-link {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.85rem;
+  position: absolute;
+  top: 12px;
+  right: 16px;
 }
 
-/* Map */
-.map-wrap { position: fixed; inset: 0; }
-#map { position: absolute; inset: 0; }
-.mapbox-gl-draw_ctrl-draw-btn { width: 36px; height: 36px; }
-
-/* Brand pill (center top) */
 .brand {
-  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-  z-index: 5; padding: 10px 14px; border-radius: 14px;
-  background: rgba(17,24,38,.70);
-  border: 1px solid rgba(255,255,255,.06);
-  box-shadow: 0 8px 18px rgba(0,0,0,.35);
-  display: flex; align-items: center; gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
 }
-.brand img { display: block; }
-.heading { font-weight: 700; font-size: 16px; }
 
-/* Panels / cards (Apple glassy) */
-.panel {
-  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 5;
-  display: grid; gap: 10px;
+.brand img {
+  height: 22px;
 }
-.card {
-  background: rgba(17,24,38,.6);
-  backdrop-filter: saturate(160%) blur(10px);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 20px; padding: 14px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.45);
-}
-.stack { display: grid; gap: 6px; }
-.row { display: flex; gap: 8px; }
-.row > * { flex: 1; }
 
-/* Inputs */
-.pill {
-  background: #0f1522; color: #e6eef8;
-  padding: 10px 12px; border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.1);
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  background-color: #ddd;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+/* ===== Form Card ===== */
+.app-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  padding: 20px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.form-card h2 {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 12px;
+  display: block;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 4px;
+  transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
   outline: none;
 }
-.pill:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0,84,164,.25);
+
+.pill {
+  appearance: none;
+  border-radius: 50px;
 }
 
-/* Buttons */
-.controls button,
-.item .actions button {
-  border: 1px solid rgba(255,255,255,.12);
-  background: #0f1522; color: #e6eef8;
-  padding: 12px 14px; border-radius: 14px;
-  font-weight: 700; letter-spacing: .2px;
-  box-shadow: 0 6px 16px rgba(0,0,0,.25);
-  backdrop-filter: saturate(140%) blur(6px);
+/* ===== Quote Box ===== */
+.quote-box {
+  background-color: #f4f4f4;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 14px;
+  font-size: 0.9rem;
+}
+
+/* ===== Buttons ===== */
+.primary-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all .2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.controls button.primary,
-.item .actions button.primary {
-  background: linear-gradient(135deg, var(--dynamic) 0%, #1f7ccf 40%, var(--accent-green) 100%);
-  color: #001428; border-color: transparent;
-  box-shadow: 0 10px 24px rgba(0,84,164,.35);
+.primary-btn:hover {
+  background-color: var(--primary-color-dark);
 }
 
-.controls button:hover,
-.item .actions button:hover {
-  transform: translateY(-1px);
+/* ===== Dynamic Theme Colors ===== */
+/* Default to Snow theme */
+:root {
+  --primary-color: #1b74e4; /* Snow blue */
+  --primary-color-dark: #155bb8;
 }
 
-.controls button:disabled,
-.item .actions button:disabled {
-  opacity: .5; cursor: not-allowed;
-}
-
-/* Hints / Toasts */
-.draw-hint {
-  position: fixed; top: 60px; left: 12px; z-index: 5;
-  padding: 8px 10px; background: rgba(17,24,38,.75);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 10px; font-size: 12px; color: #c9d4e0;
-  box-shadow: 0 6px 16px rgba(0,0,0,.3);
-}
-.toast {
-  position: fixed; top: 12px; right: 12px; z-index: 6;
-  background: #0f1522; border: 1px solid rgba(255,255,255,.08);
-  padding: 10px 12px; border-radius: 12px; display: none;
-}
-
-/* Contractor console list/cards */
-.list {
-  max-width: 900px; margin: 80px auto 40px; padding: 0 16px;
-  display: grid; gap: 12px;
-}
-.item {
-  background: rgba(17,24,38,.9);
-  border: 1px solid rgba(255,255,255,.06);
-  border-radius: 14px; padding: 12px;
-  display: grid; gap: 8px;
-}
-.item .meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #c9d4e0; }
-.item .actions { display: flex; gap: 8px; }
-
-/* Status coloring */
-.status-open       { color: #d2e3ff; }
-.status-assigned   { color: #ffe4a3; }
-.status-inProgress { color: #a6ffc7; }
-.status-completed  { color: var(--accent-green); }
-
-/* Responsive tweaks */
-@media (max-width: 560px) {
-  .row { flex-direction: column; }
-  .brand { left: 12px; transform: none; }
+/* Grass theme */
+body.lawn-theme {
+  --primary-color: #27ae60;
+  --primary-color-dark: #1e8a4d;
 }
