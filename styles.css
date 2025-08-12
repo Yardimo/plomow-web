@@ -1,103 +1,31 @@
-:root{
-  --bg:#0b0f14;
-  --card:#111826;
-  --muted:#93a3b3;
-  --accent-blue:#0054A4;   /* Plomow Blue */
-  --accent-green:#2E9E4D;  /* Plomow Green */
-  --dynamic:#0054A4;       /* JS swaps based on service */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
 }
 
-/* Layout base */
-html,body{height:100%;margin:0;background:var(--bg);color:#e6eef8}
-#map{position:fixed;inset:0}
-
-/* Brand lockup (top-left) */
-.brand{
-  position:fixed; left:12px; top:12px; z-index:7;
-  display:flex; align-items:center; gap:10px;
-  padding:8px 12px; border-radius:12px;
-  background:rgba(17,24,38,.72);
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  text-decoration:none; color:#e6eef8;
-}
-.brand img{
-  height:28px; width:auto; display:block;
-}
-.brand .tagline{
-  font-size:12px; letter-spacing:.06em; color:var(--muted);
-  white-space:nowrap;
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Top-right link */
-.simple-link{
-  position:fixed; top:12px; right:12px; z-index:7;
-  background:rgba(17,24,38,.85);
-  border:1px solid rgba(255,255,255,.06);
-  color:#e6eef8; text-decoration:none;
-  padding:8px 10px; border-radius:12px; font-weight:600;
+.logo {
+  height: 40px;
+  margin-right: 10px;
 }
 
-/* Glass panel (bottom sheet) */
-.card{
-  position:fixed; left:12px; right:12px; bottom:12px; z-index:6;
-  max-width:640px; margin:0 auto;
-  background:rgba(17,24,38,.65);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px; backdrop-filter:saturate(160%) blur(10px);
-  box-shadow:0 12px 28px rgba(0,0,0,.45);
-  padding:14px;
-}
-.row{display:flex; gap:8px}
-.row>*{flex:1}
-
-/* Inputs */
-.pill{
-  background:#0f1522; color:#e6eef8;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:999px; padding:12px 14px; outline:none;
-  font-size:16px;
-}
-.pill:focus{
-  border-color:var(--dynamic);
-  box-shadow:0 0 0 3px color-mix(in oklab, var(--dynamic) 35%, transparent);
-}
-
-/* Buttons */
-.controls button{
-  border:1px solid rgba(255,255,255,.12);
-  background:#0f1522; color:#e6eef8;
-  padding:12px 14px; border-radius:12px;
-  font-weight:700; letter-spacing:.2px;
-  box-shadow:0 6px 16px rgba(0,0,0,.25); cursor:pointer;
-}
-.controls button.primary{
-  background:linear-gradient(135deg, var(--dynamic) 0%, #1f7ccf 40%, var(--accent-green) 100%);
-  color:#001428; border-color:transparent;
-  box-shadow:0 10px 24px rgba(0,84,164,.35);
-}
-.controls button:disabled{opacity:.55; cursor:not-allowed}
-
-/* Metrics chips */
-.metrics{
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:8px; margin-top:8px;
-}
-.chip{
-  background:#0f1522; border:1px solid rgba(255,255,255,.08);
-  border-radius:999px; padding:8px 10px; text-align:center;
-  font-size:.95rem; color:#c9d4e0;
-}
-
-/* Mobile tweaks */
-@media (max-width:560px){
-  .row{flex-direction:column}
-  .brand img{height:24px}
-  .brand .tagline{display:none} /* keep it tidy on phones */
-  .card{left:12px; right:12px; bottom:12px}
-}
-
-/* iOS safe areas */
-@supports(padding:max(0px)){
-  .card{ padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
