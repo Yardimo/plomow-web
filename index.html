@@ -3,49 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plomow – Book Service</title>
+  <title>PLOMOW – Book Service</title>
 
-  <!-- Mapbox GL JS -->
+  <!-- Mapbox GL -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet" />
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
 
-  <!-- Mapbox GL Draw -->
+  <!-- Mapbox Draw -->
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.css" />
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.5.0/mapbox-gl-draw.js"></script>
 
   <!-- Turf.js -->
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
-  <!-- React (CDN) -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- Nice-to-have for mobile theming -->
+  <link rel="stylesheet" href="./styles.css" />
   <meta name="theme-color" content="#0054A4" />
   <link rel="icon" href="favicon.ico">
 </head>
 <body>
-  <a class="simple-link top-right" href="contractor.html">Contractor Console →</a>
+  <a class="simple-link top-right" href="./contractor.html">Contractor Console →</a>
 
-  <div class="brand">
-    <img src="logo.svg" alt="Plomow" height="18" />
-    <span class="badge">snow • ice • grass</span>
+  <div id="map"></div>
+
+  <!-- Floating UI panel -->
+  <div id="panel" class="form-card">
+    <div class="row">
+      <select id="service-type" class="pill" aria-label="Service">
+        <option value="snow">❄ Snow Removal</option>
+        <option value="lawn">🌱 Lawn Cutting</option>
+        <option value="leaves">🍂 Leaf Cleanup</option>
+        <option value="salt">🧂 Salting</option>
+      </select>
+      <input id="address" class="pill" placeholder="Address (optional)" />
+    </div>
+
+    <div class="row controls" style="margin-top:8px">
+      <button id="btn-area">+ Add Area</button>
+      <button id="btn-edge">+ Add Edge</button>
+      <button id="btn-finish">Finish</button>
+      <button id="btn-clear">Clear</button>
+      <button id="btn-request" class="primary" disabled>Request</button>
+    </div>
+
+    <div id="metrics" class="metrics" style="display:none">
+      <div class="chip">Area: <b id="m-area-m2">0</b> m² / <b id="m-area-ft2">0</b> ft²</div>
+      <div class="chip">Edge: <b id="m-edge-m">0</b> m / <b id="m-edge-ft">0</b> ft</div>
+      <div class="chip">Estimate: <b id="m-price">$0.00</b></div>
+    </div>
   </div>
 
-  <div id="root"></div>
-
-  <!-- Your React app (Babel-transpiled) -->
-  <script type="text/babel" src="app.js"></script>
-
-  <!-- Dynamic brand color swap (expects a select with id="service-type") -->
-  <script src="script.js"></script>
-
-  <noscript>
-    <div class="simple-link top-left">Please enable JavaScript to use Plomow.</div>
-  </noscript>
+  <script src="./app.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
