@@ -1,7 +1,7 @@
 /* =========================
-   PLOMOW styles.css (updated)
+   PLOMOW styles.css (Full Unified)
    Brand: Blue #0054A4, Green #2E9E4D
-   Hybrid vibe: Apple glass + Uber map dark
+   Hybrid vibe: Apple glass + Uber dark
    ========================= */
 
 :root {
@@ -83,7 +83,8 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 /* Buttons */
-.controls button {
+.controls button,
+.item .actions button {
   border: 1px solid rgba(255,255,255,.12);
   background: #0f1522; color: #e6eef8;
   padding: 12px 14px; border-radius: 14px;
@@ -91,14 +92,25 @@ a { color: var(--accent); text-decoration: none; }
   box-shadow: 0 6px 16px rgba(0,0,0,.25);
   backdrop-filter: saturate(140%) blur(6px);
   cursor: pointer;
+  transition: all .2s ease;
 }
-.controls button.primary {
-  /* Blue → Green gradient, with dynamic brand hue from JS */
+
+.controls button.primary,
+.item .actions button.primary {
   background: linear-gradient(135deg, var(--dynamic) 0%, #1f7ccf 40%, var(--accent-green) 100%);
   color: #001428; border-color: transparent;
   box-shadow: 0 10px 24px rgba(0,84,164,.35);
 }
-.controls button:disabled { opacity: .5; cursor: not-allowed; }
+
+.controls button:hover,
+.item .actions button:hover {
+  transform: translateY(-1px);
+}
+
+.controls button:disabled,
+.item .actions button:disabled {
+  opacity: .5; cursor: not-allowed;
+}
 
 /* Hints / Toasts */
 .draw-hint {
