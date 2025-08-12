@@ -1,13 +1,13 @@
-// ========= Config =========
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlrZW5vcnJpcyIsImEiOiJjbWU0eXIyMHQwb3NlMm1wcHNkYXRwYzYxIn0.HrNdh-cFPgqR4SSYgkdHTw'; // replace me
+// ===== Config =====
+mapboxgl.accessToken = 'pk.eyJ1IjoibWlrZW5vcnJpcyIsImEiOiJjbWU0eXIyMHQwb3NlMm1wcHNkYXRwYzYxIn0.HrNdh-cFPgqR4SSYgkdHTw'; // your public token
 const STORAGE_KEY = 'plomow_jobs_v1';
 
-// ========= State =========
-let map, draw;
-let service = 'snow';
+// ===== State =====
+let map, draw, currentService = 'snow';
 let quote = null;
 
-// ========= Helpers =========
+// ===== Helpers =====
+const $ = (sel) => document.querySelector(sel);
 function currency(n){ return `$${(Number(n)||0).toFixed(2)}`; }
 
 function estimatePrice(service, areaM2, edgeM){
@@ -21,67 +21,82 @@ function estimatePrice(service, areaM2, edgeM){
   return Math.max(raw, cfg.base);
 }
 
-function setDynamicColor() {
-  const color = service === 'lawn' ? '#2E9E4D' : '#0054A4';
-  document.documentElement.style.setProperty('--primary-color', color);
-  document.documentElement.style.setProperty('--primary-color-dark', color);
-  // update draw layer colors if layers exist
-  try {
-    map.setPaintProperty('draw-p-fill','fill-color',color);
-    map.setPaintProperty('draw-p-stroke','line-color',color);
-    map.setPaintProperty('draw-line','line-color',color);
-  } catch(e){}
+function setThemeByService() {
+  const color = (currentService === 'lawn') ? '#2E9E4D' : '#0054A4';
+  document.documentElement.style.setProperty('--dynamic', color);
+
+  // Try to update draw layer colors (if layers exist)
+  const layers = [
+    'gl-draw-polygon-fill-inactive',
+    'gl-draw-polygon-stroke-inactive',
+    'gl-draw-line-inactive',
+    'gl-draw-polygon-fill-active',
+    'gl-draw-polygon-stroke-active',
+    'gl-draw-line-active'
+  ];
+  layers.forEach(id => {
+    try {
+      const type = map.getLayer(id)?.type;
+      if (type === 'fill')  map.setPaintProperty(id, 'fill-color', color);
+      if (type === 'line')  map.setPaintProperty(id, 'line-color', color);
+    } catch(e){}
+  });
 }
 
 function updateMetricsUI(){
-  const metrics = document.getElementById('metrics');
-  const btnRequest = document.getElementById('btn-request');
+  const metrics = $('#metrics');
+  const btn = $('#btn-request');
   if (!quote) {
     metrics.style.display = 'none';
-    btnRequest.disabled = true;
+    btn.disabled = true;
     return;
   }
   metrics.style.display = 'grid';
-  btnRequest.disabled = false;
-  document.getElementById('m-area-m2').textContent = quote.areaM2;
-  document.getElementById('m-area-ft2').textContent = quote.areaFt2;
-  document.getElementById('m-edge-m').textContent = quote.edgeM;
-  document.getElementById('m-edge-ft').textContent = quote.edgeFt;
-  document.getElementById('m-price').textContent = currency(quote.price);
+  btn.disabled = false;
+  $('#m-area-m2').textContent = quote.areaM2;
+  $('#m-area-ft2').textContent = quote.areaFt2;
+  $('#m-edge-m').textContent = quote.edgeM;
+  $('#m-edge-ft').textContent = quote.edgeFt;
+  $('#m-price').textContent = currency(quote.price);
 }
 
-// ========= Map init =========
+// ===== Map Init =====
 (function init(){
-  mapboxgl.accessToken = MAPBOX_TOKEN;
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
-    center: [-79.3832, 43.6532], // Toronto
+    center: [-81.233, 42.983], // London
     zoom: 12,
     attributionControl: false
   });
-  map.addControl(new mapboxgl.AttributionControl({ compact:true }));
-  map.addControl(new mapboxgl.NavigationControl({ visualizePitch:true }));
+  map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+  map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }));
 
+  // Geocoder (autocomplete)
+  const geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl,
+    placeholder: 'Search address',
+    marker: false,
+    proximity: { longitude: -81.233, latitude: 42.983 },
+  });
+  map.addControl(geocoder, 'top-left');
+
+  // Sync geocoder text into our optional address field
+  geocoder.on('result', (e) => {
+    const place = e.result?.place_name || '';
+    $('#address').value = place;
+  });
+
+  // Draw
   draw = new MapboxDraw({
     displayControlsDefault: false,
-    controls: {},
-    defaultMode: 'simple_select',
-    styles: [
-      { id:'draw-p-fill',   type:'fill',
-        filter:['all',['==','$type','Polygon'],['!=','mode','static']],
-        paint:{ 'fill-color':'#0054A4','fill-opacity':0.22 } },
-      { id:'draw-p-stroke', type:'line',
-        filter:['all',['==','$type','Polygon'],['!=','mode','static']],
-        paint:{ 'line-color':'#0054A4','line-width':2 } },
-      { id:'draw-line',     type:'line',
-        filter:['all',['==','$type','LineString'],['!=','mode','static']],
-        paint:{ 'line-color':'#0054A4','line-width':2 } }
-    ]
+    controls: {}, // we use custom buttons
+    defaultMode: 'simple_select'
   });
   map.addControl(draw);
 
-  // listen for draw changes
+  // recompute metrics on draw changes
   const recompute = () => {
     const data = draw.getAll();
     if (!data || data.features.length === 0){ quote = null; updateMetricsUI(); return; }
@@ -96,7 +111,7 @@ function updateMetricsUI(){
     }
     const areaFt2 = Math.round(areaM2 * 10.7639);
     const edgeFt  = Math.round(edgeM * 3.28084);
-    const price   = estimatePrice(service, areaM2, edgeM);
+    const price   = estimatePrice(currentService, areaM2, edgeM);
 
     quote = {
       areaM2: Math.round(areaM2),
@@ -113,32 +128,27 @@ function updateMetricsUI(){
   map.on('draw.selectionchange', recompute);
 
   // UI events
-  document.getElementById('service-type').addEventListener('change', (e)=>{
-    service = e.target.value;
-    setDynamicColor();
-    // recompute with new pricing
-    const data = draw.getAll();
-    if (data && data.features.length) { // force recompute
-      map.fire('draw.update');
-    }
+  $('#service-type').addEventListener('change', (e)=>{
+    currentService = e.target.value;
+    setThemeByService();
+    // refresh pricing with new service
+    if (draw.getAll().features.length) recompute();
   });
-
-  document.getElementById('btn-area').addEventListener('click', ()=> draw.changeMode('draw_polygon'));
-  document.getElementById('btn-edge').addEventListener('click', ()=> draw.changeMode('draw_line_string'));
-  document.getElementById('btn-finish').addEventListener('click', ()=> draw.changeMode('simple_select'));
-  document.getElementById('btn-clear').addEventListener('click', ()=>{
+  $('#btn-area').addEventListener('click', ()=> draw.changeMode('draw_polygon'));
+  $('#btn-edge').addEventListener('click', ()=> draw.changeMode('draw_line_string'));
+  $('#btn-finish').addEventListener('click', ()=> draw.changeMode('simple_select'));
+  $('#btn-clear').addEventListener('click', ()=>{
     const ids = (draw.getAll().features||[]).map(f=>f.id);
     ids.forEach(id=>draw.delete(id));
     quote = null; updateMetricsUI();
   });
-
-  document.getElementById('btn-request').addEventListener('click', ()=>{
+  $('#btn-request').addEventListener('click', ()=>{
     if (!quote) return;
     const job = {
       id: Math.random().toString(36).slice(2) + Date.now().toString(36),
       createdAt: new Date().toISOString(),
-      service,
-      address: document.getElementById('address').value || '',
+      service: currentService,
+      address: $('#address').value || '',
       ...quote,
       geometry: draw.getAll()
     };
@@ -146,11 +156,11 @@ function updateMetricsUI(){
     list.unshift(job);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
     // reset
-    document.getElementById('btn-clear').click();
-    document.getElementById('address').value = '';
+    $('#btn-clear').click();
+    $('#address').value = '';
     alert('Request sent! Open the Contractor Console.');
   });
 
-  // initial theme color
-  setDynamicColor();
+  // initial theme
+  setThemeByService();
 })();
